@@ -1,0 +1,35 @@
+services:
+  db:
+    image: custom-postgres
+    command: postgres
+    env_file:
+      - .env  
+    environment:
+      DEV_ADMIN_USER: ${DEV_ADMIN_USER}
+      DEV_ADMIN_PASSWORD: ${DEV_ADMIN_PASSWORD}
+      API_ACCESS_USER: ${API_ACCESS_USER}
+      API_ACCESS_PASSWORD: ${API_ACCESS_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+      # KeyVault application
+      SECRETS_READ_USER:    ${SECRETS_READ_USER}
+      SECRETS_READ_PASSWORD: ${SECRETS_READ_PASSWORD}
+      SECRETS_WRITE_USER:   ${SECRETS_WRITE_USER}
+      SECRETS_WRITE_PASSWORD: ${SECRETS_WRITE_PASSWORD}
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - homelab
+
+volumes:
+  db_data:
+
+networks:
+  homelab:
+    external: true
