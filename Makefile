@@ -6,7 +6,7 @@ up:
 	docker-compose up --build -d
 
 down:
-	docker-compose down -v
+	docker-compose down
 
 image:
 	docker build -t custom-postgres .
@@ -15,5 +15,5 @@ build: image
 	docker-compose build
 
 reset:
-	docker-compose down -v
+	docker-compose down --remove-orphans -v
 	docker-compose up --build -d
