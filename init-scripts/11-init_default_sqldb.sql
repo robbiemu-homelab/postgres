@@ -1,4 +1,12 @@
-CREATE ROLE sql_role;
+DO $$
+BEGIN
+    IF NOT EXISTS (
+        SELECT 1 FROM pg_catalog.pg_roles WHERE rolname = 'sql_role'
+    ) THEN
+        CREATE ROLE sql_role;
+    END IF;
+END
+$$;
 
 -- Create a table with a UNIQUE constraint on 'data'
 CREATE TABLE IF NOT EXISTS postgres_default_table (

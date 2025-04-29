@@ -1,5 +1,13 @@
 -- Create a specific role for NoSQL-like table access
-CREATE ROLE nosql_role;
+DO $$
+BEGIN
+    IF NOT EXISTS (
+        SELECT 1 FROM pg_catalog.pg_roles WHERE rolname = 'nosql_role'
+    ) THEN
+        CREATE ROLE nosql_role;
+    END IF;
+END
+$$;
 
 -- Create the NoSQL-like table using JSONB if it doesn't already exist
 CREATE TABLE IF NOT EXISTS nosql_table (

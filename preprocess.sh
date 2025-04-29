@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo "[INFO] Preprocessing SQL template files"
+
 set -e
 
 # Loop through all .tpl files in the current directory

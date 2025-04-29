@@ -10,5 +10,5 @@ ALTER TABLE secrets
   ADD PRIMARY KEY (project_key, secret_key);
 
 -- 3) Adjust grants (if you rely on SELECT ... TO secrets_reader)
-GRANT SELECT (secret_value) ON secrets TO secrets_reader;
-GRANT INSERT, UPDATE, DELETE ON secrets TO secrets_writer;
+GRANT SELECT (secret_value) ON secrets TO ${SECRETS_READ_USER};
+GRANT SELECT, INSERT, UPDATE, DELETE ON secrets TO ${SECRETS_WRITE_USER};

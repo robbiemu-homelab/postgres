@@ -5,13 +5,13 @@
 CREATE TABLE IF NOT EXISTS secrets (
   secret_key   TEXT    PRIMARY KEY,
   secret_value JSONB   NOT NULL,
-  created_at   TIMESTAMPTZ DEFAULT now()
+  created_at   TIMESTAMPTZ DEFAULT now(),
   modified_at   TIMESTAMPTZ DEFAULT now()
 );
 
 -- 2) Grant minimal privileges
-GRANT SELECT ON secrets            TO secrets_reader;
-GRANT INSERT, UPDATE, DELETE ON secrets TO secrets_writer;
+GRANT SELECT ON secrets            TO ${SECRETS_READ_USER};
+GRANT SELECT, INSERT, UPDATE, DELETE ON secrets TO ${SECRETS_WRITE_USER};
 
 -- (Optional) seed with a placeholder
 WITH initial AS (
